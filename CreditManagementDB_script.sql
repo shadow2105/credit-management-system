@@ -9,10 +9,10 @@ USE java2;
 -- 1. creating tables and adding constraints
 
 CREATE TABLE admins (
-	user_id		VARCHAR(20),		
+    user_id	VARCHAR(20),		
     first_name	VARCHAR(35)	NOT NULL,
     last_name	VARCHAR(35)	NOT NULL,
-    passwd		VARCHAR(20)	NOT NULL );
+    passwd	VARCHAR(20)	NOT NULL );
     
 ALTER TABLE admins
 	ADD CONSTRAINT admins_user_id_pk
@@ -20,13 +20,13 @@ ALTER TABLE admins
    
 
 CREATE TABLE customers (
-	user_id		VARCHAR(20),		
+    user_id	VARCHAR(20),		
     first_name	VARCHAR(35)	 NOT NULL,
     last_name	VARCHAR(35)	 NOT NULL,
-    passwd		VARCHAR(20)	 NOT NULL, 
-    address		VARCHAR(100) NOT NULL,
+    passwd	VARCHAR(20)	 NOT NULL, 
+    address	VARCHAR(100)     NOT NULL,
     mobile_no	VARCHAR(10)	 NOT NULL UNIQUE,
-    email 		VARCHAR(50)  NOT NULL UNIQUE,
+    email 	VARCHAR(50)      NOT NULL UNIQUE,
     occupation  VARCHAR(30) );
     
 ALTER TABLE customers
@@ -37,8 +37,8 @@ ALTER TABLE customers
 CREATE TABLE credit_accounts (
     account_no		CHAR(16),
     credit_limit	NUMERIC(8, 2) NOT NULL,
-    balance			NUMERIC(8, 2) NOT NULL, 
-    user_id			VARCHAR(20)   NOT NULL );
+    balance		NUMERIC(8, 2) NOT NULL, 
+    user_id		VARCHAR(20)   NOT NULL );
     
 ALTER TABLE credit_accounts
 	ADD CONSTRAINT credit_accounts_account_no_pk
@@ -47,13 +47,13 @@ ALTER TABLE credit_accounts
             
 CREATE TABLE transactions (
     transaction_id    VARCHAR(6),
-    account_no		  CHAR(16),
-    transaction_date  DATETIME		 NOT NULL,
+    account_no	      CHAR(16),
+    transaction_date  DATETIME	     NOT NULL,
     post_date         DATE,
     dscription        VARCHAR(100)   NOT NULL,
     transaction_type  CHAR(1)        NOT NULL,
-    amount			  NUMERIC(10, 2) NOT NULL,
-    closing_balance	  NUMERIC(8, 2)  NOT NULL );
+    amount	      NUMERIC(10, 2) NOT NULL,
+    closing_balance   NUMERIC(8, 2)  NOT NULL );
     
 ALTER TABLE transactions
 	ADD CONSTRAINT transactions_transaction_id_account_no_pk

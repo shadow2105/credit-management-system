@@ -1,2 +1,2 @@
 # credit-management-system
-A Credit Management console application
+A Java and MySQL based console application to manage Customer Credit Accounts 

@@ -12,8 +12,8 @@ public class AdminServices {
         System.out.println("\n----------------------- Admin Profile -----------------------");
         String userId = Login.getLoggedInAdmin();
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM admins WHERE user_id = '" + userId + "'";
             ResultSet resultSet = statement.executeQuery(query);
@@ -79,7 +79,9 @@ public class AdminServices {
         catch (SQLException e) {
             System.out.println(e);
         }
-
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static void viewAllCustomers() {
@@ -98,8 +100,8 @@ public class AdminServices {
             System.out.println("---------------------------------------------------------" +
                     "--------------------------------------------------------------------");
 
-            Connection connection = Database.connectDatabase();
             try {
+                Connection connection = Database.connectDatabase();
                 Statement statement = connection.createStatement();
                 String query = "SELECT * FROM customers";
                 ResultSet resultSet = statement.executeQuery(query);
@@ -126,6 +128,9 @@ public class AdminServices {
             } catch (SQLException e) {
                 System.out.println(e);
             }
+            catch (Exception e) {
+                System.out.println(e);
+            }
         }
 
         System.out.print("Press q to go back to the Dashboard: ");
@@ -150,8 +155,8 @@ public class AdminServices {
     private static int countCustomers() {
         int numOfCustomers = 0;
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM customers";
             ResultSet resultSet = statement.executeQuery(query);
@@ -163,6 +168,9 @@ public class AdminServices {
             connection.close();
         }
         catch (SQLException e) {
+            System.out.println(e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
 

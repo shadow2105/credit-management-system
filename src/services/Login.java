@@ -20,8 +20,8 @@ public class Login {
         System.out.print("Enter Password: ");
         String password = credentials.nextLine();
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM admins WHERE user_id = '" + userId + "'";
             ResultSet resultSet = statement.executeQuery(query);
@@ -54,6 +54,9 @@ public class Login {
         catch (SQLException e) {
             System.out.println(e);
         }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static void customerLogin() {
@@ -65,8 +68,8 @@ public class Login {
         System.out.print("Enter Password: ");
         String password = credentials.nextLine();
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM customers WHERE user_id = '" + userId + "'";
             ResultSet resultSet = statement.executeQuery(query);
@@ -97,6 +100,9 @@ public class Login {
             connection.close();
         }
         catch (SQLException e) {
+            System.out.println(e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -135,8 +141,6 @@ public class Login {
 
         System.out.println("\n--------------------------------------------------------------------------\n");
 
-        Connection connection = Database.connectDatabase();
-
         if (firstName.equals("-1") || lastName.equals("-1") || address.equals("-1") || mobileNum.equals("-1") || email.equals("-1") || userId.equals("-1") || password.equals("-1") || occupation.equals("-1")) {
             System.out.println("Changes discarded!\nNew Customer Registration unsuccessful.");
         }
@@ -146,6 +150,7 @@ public class Login {
         }
         else {
             try {
+                Connection connection = Database.connectDatabase();
                 Statement statement = connection.createStatement();
                 String query = "INSERT INTO " +
                         "customers (user_id, first_name, last_name, passwd, address, mobile_no, email, occupation) " +
@@ -168,6 +173,9 @@ public class Login {
             catch (SQLException e) {
                 System.out.println(e);
             }
+            catch (Exception e) {
+                System.out.println(e);
+            }
         }
     }
 
@@ -177,8 +185,8 @@ public class Login {
         System.out.print("\nEnter Email Address: ");
         String email = credential.nextLine().trim().toLowerCase();
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM customers WHERE email = '" + email + "'";
             ResultSet resultSet = statement.executeQuery(query);
@@ -233,6 +241,9 @@ public class Login {
             connection.close();
         }
         catch (SQLException e) {
+            System.out.println(e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
     }

@@ -21,8 +21,8 @@ public class CustomerServices {
         String userId = Login.getLoggedInCustomer();
         System.out.println("\n----------------------- Customer Profile -----------------------");
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM customers WHERE user_id = '" + userId + "'";
             ResultSet resultSet = statement.executeQuery(query);
@@ -161,7 +161,9 @@ public class CustomerServices {
         catch (SQLException e) {
             System.out.println(e);
         }
-
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static void viewAllCreditAccounts() {
@@ -258,8 +260,6 @@ public class CustomerServices {
                 System.out.println("Please Wait!");
             }
 
-            Connection connection = Database.connectDatabase();
-
             if (grossIncome < 10000.00F) {
                 System.out.println("\nNew Credit Account Not Approved!\n");
             }
@@ -272,6 +272,7 @@ public class CustomerServices {
                 float currentBalance = 0.0F;
 
                 try {
+                    Connection connection = Database.connectDatabase();
                     Statement statement = connection.createStatement();
                     String query = "INSERT INTO " +
                             "credit_accounts (account_no, credit_limit, balance, user_id) " +
@@ -287,6 +288,9 @@ public class CustomerServices {
                     connection.close();
                 }
                 catch (SQLException e) {
+                    System.out.println(e);
+                }
+                catch (Exception e) {
                     System.out.println(e);
                 }
             }
@@ -402,8 +406,8 @@ public class CustomerServices {
     private static int countCreditAccounts(String userId) {
         int countCreditAccounts = 0;
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT COUNT(account_no) AS count FROM credit_accounts " +
                     "WHERE user_id='" + userId + "'";
@@ -417,14 +421,17 @@ public class CustomerServices {
         catch (SQLException e) {
             System.out.println(e);
         }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 
         return countCreditAccounts;
     }
     private static float calculateTotalAccountsBalance(String userId) {
         float totalAccountsBalance = 0.0F;
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT SUM(balance) AS total FROM credit_accounts " +
                     "WHERE user_id='" + userId + "'";
@@ -438,14 +445,17 @@ public class CustomerServices {
         catch (SQLException e) {
             System.out.println(e);
         }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 
         return totalAccountsBalance;
     }
     private static float calculateTotalCreditLimit(String userId) {
         float totalCreditLimit = 0.0F;
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT SUM(credit_limit) AS total FROM credit_accounts " +
                     "WHERE user_id='" + userId + "'";
@@ -459,14 +469,17 @@ public class CustomerServices {
         catch (SQLException e) {
             System.out.println(e);
         }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 
         return totalCreditLimit;
     }
     private static ArrayList<CreditAccount> getUserCreditAccounts(String userId) {
         ArrayList<CreditAccount> creditAccounts = new ArrayList<>();
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM credit_accounts WHERE user_id='" + userId + "'";
             ResultSet resultSet = statement.executeQuery(query);
@@ -487,6 +500,9 @@ public class CustomerServices {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 
         return creditAccounts;
     }
@@ -494,8 +510,8 @@ public class CustomerServices {
         String accountNum = Utilities.generateRandomNumericString(16);
         int accountExists = 0;
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT COUNT(account_no) AS count FROM credit_accounts " +
                     "WHERE account_no='" + accountNum + "'";
@@ -509,6 +525,9 @@ public class CustomerServices {
         catch (SQLException e) {
             System.out.println(e);
         }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 
         if (accountExists != 0) { generateCreditAccountNum(); }
 
@@ -517,8 +536,8 @@ public class CustomerServices {
     private static float getLastAccountBalanceForMonth(int month, int year, String accountNum) {
         float monthClosingBalance = 0.0F;
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT closing_balance FROM transactions " +
                     "WHERE account_no='" + accountNum + "' AND MONTH(transaction_date)='" + month + "' AND Year(transaction_date)='" + year + "' ORDER BY transaction_date DESC LIMIT 1";
@@ -536,14 +555,17 @@ public class CustomerServices {
         catch (SQLException e) {
             System.out.println(e);
         }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 
         return monthClosingBalance;
     }
     private static ArrayList<Transaction> getMonthlyAccountTransactions(int month, int year, String accountNum, char transaction_type) {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM transactions " +
                     "WHERE account_no='" + accountNum + "' AND MONTH(transaction_date)='" + month + "' AND Year(transaction_date)='" + year + "' AND transaction_type='" + transaction_type + "' ORDER BY transaction_date";
@@ -567,6 +589,9 @@ public class CustomerServices {
             connection.close();
 
         } catch (SQLException e) {
+            System.out.println(e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
 
@@ -671,8 +696,9 @@ public class CustomerServices {
 
                 String customerName = userId;
                 String customerAddress = "";
-                Connection connection = Database.connectDatabase();
+
                 try {
+                    Connection connection = Database.connectDatabase();
                     Statement statement = connection.createStatement();
                     String query = "SELECT first_name, last_name, address FROM customers " +
                             "WHERE user_id='" + userId + "'";
@@ -688,6 +714,9 @@ public class CustomerServices {
 
                     connection.close();
                 } catch (SQLException e) {
+                    System.out.println(e);
+                }
+                catch (Exception e) {
                     System.out.println(e);
                 }
 
@@ -804,8 +833,8 @@ public class CustomerServices {
         String transactionId = Utilities.generateRandomNumericString(6);
         int transactionExists = 0;
 
-        Connection connection = Database.connectDatabase();
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             String query = "SELECT COUNT(transaction_id) AS count FROM transactions " +
                     "WHERE transaction_id='" + transactionId + "' AND account_no='" + accountNum + "'";
@@ -819,6 +848,9 @@ public class CustomerServices {
         catch (SQLException e) {
             System.out.println(e);
         }
+        catch (Exception e) {
+            System.out.println(e);
+        }
 
         if (transactionExists != 0) { generateAccountTransactionId(accountNum); }
 
@@ -827,8 +859,9 @@ public class CustomerServices {
     private static void makeAccountTransaction(CreditAccount selectedCreditAccount) {
         System.out.println("\n----------------------- Transaction Center -----------------------\n");
         System.out.println("You selected Credit Account: " + selectedCreditAccount.getAccountNum());
-        Connection connection = Database.connectDatabase();
+
         try {
+            Connection connection = Database.connectDatabase();
             Statement statement = connection.createStatement();
             System.out.println("Press q to go back.");
             System.out.println("\n1. Credit" +
@@ -954,6 +987,9 @@ public class CustomerServices {
             connection.close();
         }
         catch (SQLException e) {
+            System.out.println(e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
     }
